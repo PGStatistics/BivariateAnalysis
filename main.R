@@ -22,3 +22,38 @@ raw.sport_zesp <- read_delim("data/Ćwiczący w sekcjach sportowych wg sportów 
 raw.sport_pozost <- read_delim("data/Ćwiczący w sekcjach sportowych wg sportów - pozostałe.csv", 
                                ";", escape_double = FALSE, col_types = cols(X419 = col_skip()), 
                                trim_ws = TRUE)
+
+#remove NAs
+raw.sport_pozost[is.na(raw.sport_pozost)] <- 0
+raw.sport_zesp[is.na(raw.sport_zesp)] <- 0
+
+#cleaning
+clean.sport_pozost <- data.frame(raw.sport_pozost$Nazwa, raw.sport_pozost[,3:10], row.names=1)
+names(clean.sport_pozost) = col.names=c(seq(2002,2016,2))
+for (k in 1:8)
+{
+  for (i in seq(k + 10, 418, 8))
+  {
+    for(j in 1:17)
+    {
+      clean.sport_pozost[j,k] <- clean.sport_pozost[j,k] + as.numeric(raw.sport_pozost[j,i])
+    }
+  }
+}
+
+clean.sport_zesp <- data.frame(raw.sport_zesp$Nazwa, raw.sport_zesp[,3:10], row.names=1)
+names(clean.sport_zesp) = col.names=c(seq(2002,2016,2))
+for (k in 1:8)
+{
+  for (i in seq(k + 10, 162, 8))
+  {
+    for(j in 1:17)
+    {
+      clean.sport_zesp[j,k] <- as.numeric(clean.sport_zesp[j,k]) + as.numeric(raw.sport_zesp[j,i])
+    }
+  }
+}
+
+clean.szpitale <- data.frame(raw.szpitale[,-c(1,18)], row.names=1)
+names(clean.szpitale) <- 2002:2016
+View(clean.szpitale)
