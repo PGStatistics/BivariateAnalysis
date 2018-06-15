@@ -58,8 +58,16 @@ clean.szpitale <- data.frame(raw.szpitale[,-c(1,18)], row.names=1)
 names(clean.szpitale) <- 2002:2016
 View(clean.szpitale)
 
+clean.ochr_pow <- data.frame(raw.ochr_pow[,2:20], row.names=1)
+names(clean.ochr_pow) <- 1999:2016
+View(clean.ochr_pow)
+
 #liczba zachorowań na grypę
 plot(1999:2016, c(as.numeric(raw.choroby[1,453:458]), as.numeric(raw.choroby[1,441:452])), xlim=c(1999, 2016))
 lines(1999:2004, as.numeric(raw.choroby[1,453:458]), col="red")
 lines(2005:2016, as.numeric(raw.choroby[1,441:452]), col="green")
 lines(2004:2005, as.numeric(raw.choroby[1,c(458,441)]), col="black")
+
+clean.grypa <- data.frame(raw.choroby[,c(2,453:458,441:452)], row.names=1)
+names(clean.grypa) <- 1999:2016
+View(clean.grypa)
