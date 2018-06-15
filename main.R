@@ -57,3 +57,9 @@ for (k in 1:8)
 clean.szpitale <- data.frame(raw.szpitale[,-c(1,18)], row.names=1)
 names(clean.szpitale) <- 2002:2016
 View(clean.szpitale)
+
+#liczba zachorowań na grypę
+plot(1999:2016, c(as.numeric(raw.choroby[1,453:458]), as.numeric(raw.choroby[1,441:452])), xlim=c(1999, 2016))
+lines(1999:2004, as.numeric(raw.choroby[1,453:458]), col="red")
+lines(2005:2016, as.numeric(raw.choroby[1,441:452]), col="green")
+lines(2004:2005, as.numeric(raw.choroby[1,c(458,441)]), col="black")
