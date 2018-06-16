@@ -71,3 +71,7 @@ lines(2004:2005, as.numeric(raw.choroby[1,c(458,441)]), col="black")
 clean.grypa <- data.frame(raw.choroby[,c(2,453:458,441:452)], row.names=1)
 names(clean.grypa) <- 1999:2016
 View(clean.grypa)
+
+#obtaining descriptives
+source('Descriptives.R')
+Descriptives(as.numeric(data.matrix(clean.grypa[2:17,])))
