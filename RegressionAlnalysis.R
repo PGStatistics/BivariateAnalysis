@@ -1,3 +1,4 @@
+#https://stats.stackexchange.com/questions/76226/interpreting-the-residuals-vs-fitted-values-plot-for-verifying-the-assumptions
 source('movies.R')
 library(Ecdat)
 
@@ -17,3 +18,10 @@ qqPlot(full$residuals)
 ncvTest(full)
 
 exp(clean.movies$revenue)
+step(full, direction="both")
+
+library(leaps)
+best.subset<-regsubsets(revenue^0.22~budget+runtime, data=clean.movies,nvmax=5) 
+podsumowanie<-summary(best.subset)
+podsumowanie$outmat
+plot(best.subset, scale="adjr2")
