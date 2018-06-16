@@ -1,6 +1,9 @@
 source('movies.R')
 library(Ecdat)
-full<-lm(clean.movies$revenue~clean.movies$budget, na.omit=TRUE, data=clean.movies)
+
+powerTransform(clean.movies$revenue) #0.2277891
+
+full<-lm(revenue^0.22~budget+runtime, data=clean.movies)
 summary(full)
 AIC(full)
 library(fmsb)
@@ -13,5 +16,4 @@ crPlots(full)
 qqPlot(full$residuals)
 ncvTest(full)
 
-
-
+exp(clean.movies$revenue)
