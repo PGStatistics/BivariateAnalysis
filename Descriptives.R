@@ -90,11 +90,3 @@ Descriptives <- function (x) {
   cat( "Interquartile skewness:" , IQRSkewness(x), "\n" ) 
   cat( "Interquartile kurtosis:" , IQRKurtosis(x), "\n" ) 
 }
-
-source('movies.R')
-Descriptives(clean.movies$revenue)
-Descriptives(clean.movies$revenue[grepl("Fantasy", clean.movies$genres)])
-Descriptives(clean.movies$revenue[grepl("Romance", clean.movies$genres)])
-Descriptives(clean.movies$revenue[grepl("Horror", clean.movies$genres)])
-Descriptives(clean.movies$revenue[grepl("Action", clean.movies$genres)])
-Descriptives(clean.movies$revenue[grepl("Comedy", clean.movies$genres)])

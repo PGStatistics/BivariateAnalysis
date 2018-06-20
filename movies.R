@@ -1,20 +1,45 @@
+#reading data
 raw.movies <- readr::read_csv("data/tmdb_5000_movies.csv")
-
 clean.movies <- raw.movies[raw.movies$revenue != '0',]
 
-#checking outliers
-plot(density(clean.movies$revenue), main="Full dataset")
-boxplot(clean.movies$revenue, main="Full dataset")
+#top grossing films
+other.top <- clean.movies[order(clean.movies$revenue, decreasing = T),c(2, 7, 13)]
+other.top <- cbind(spot=1:100, other.top[1:100,])
+View(other.top)
 
-upperInnerFence <- as.numeric(quantile(clean.movies$revenue, 0.75)+1.5*IQR(clean.movies$revenue))
-upperOuterFence <- as.numeric(quantile(clean.movies$revenue, 0.75)+3*IQR(clean.movies$revenue))
+#top grossing fantasy films
+other.top.fantasy <- other.top[grepl("Fantasy", other.top$genres),]
 
-clean.movies <- clean.movies[raw.movies$revenue < upperOuterFence,]
+#percentage of top films
+dim(other.top.fantasy)[1] / dim(other.top)[1] * 100
 
-plot(density(clean.movies$revenue), main="Below upper outer fence")
-boxplot(clean.movies$revenue, main="Below upper outer fence")
+#percentage of total revenue
+sum(other.top.fantasy$revenue) / sum(other.top$revenue) * 100
 
-clean.movies <- clean.movies[raw.movies$revenue < upperInnerFence,]
+#descriprives before removing outliers
+source('Descriptives.R')
+Descriptives(clean.movies$revenue)
+Descriptives(clean.movies$revenue[grepl("Fantasy", clean.movies$genres)])
+Descriptives(clean.movies$revenue[grepl("Romance", clean.movies$genres)])
+Descriptives(clean.movies$revenue[grepl("Horror", clean.movies$genres)])
+Descriptives(clean.movies$revenue[grepl("Action", clean.movies$genres)])
+Descriptives(clean.movies$revenue[grepl("Comedy", clean.movies$genres)])
 
-plot(density(clean.movies$revenue), main="Below upper inner fence")
-boxplot(clean.movies$revenue, main="Below upper inner fence")
+#removing outliers
+source('Outliers.R')
+
+#descriptives after removing outliers
+Descriptives(clean.movies$revenue)
+Descriptives(clean.movies$revenue[grepl("Fantasy", clean.movies$genres)])
+Descriptives(clean.movies$revenue[grepl("Romance", clean.movies$genres)])
+Descriptives(clean.movies$revenue[grepl("Horror", clean.movies$genres)])
+Descriptives(clean.movies$revenue[grepl("Action", clean.movies$genres)])
+Descriptives(clean.movies$revenue[grepl("Comedy", clean.movies$genres)])
+
+#shortening realease date to year
+clean.movies$release_date <- substr(clean.movies$release_date, 1, 4)
+names(clean.movies)[12] <- 'release_year'
+
+View(clean.movies)
+
+sub(".*\"name\": \"(.*)\".*", "\\1", clean.movies$genres, perl=TRUE)
