@@ -24,7 +24,8 @@ VIF(full)
 exp(full$coefficients)
 
 
-crPlots(full)
+crPlots(lm(formula = revenue ~ clean.movies$budget + clean.movies$runtime + clean.movies$popularity + 
+             clean.movies$vote_count , data = clean.movies))
 qqPlot(full$residuals)
 ncvTest(full)
 
