@@ -60,4 +60,7 @@ names(clean.movies)[12] <- 'release_year'
 #generating plots
 source('Plots.R')
 
+#create class intervals
+source('ClassIntervals.R')
+
 sub(".*\"name\": \"(.*)\".*", "\\1", clean.movies$genres, perl=TRUE)
