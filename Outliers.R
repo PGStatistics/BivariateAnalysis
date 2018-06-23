@@ -18,3 +18,5 @@ boxplot(clean.movies$revenue, main="Below upper inner fence")
 
 lowerInnerFence <- as.numeric(quantile(clean.movies$revenue, 0.25)-1.5*IQR(clean.movies$revenue))
 lowerrOuterFence <- as.numeric(quantile(clean.movies$revenue, 0.25)-3*IQR(clean.movies$revenue))
+
+rm(lowerInnerFence, lowerrOuterFence, upperInnerFence, upperOuterFence)
