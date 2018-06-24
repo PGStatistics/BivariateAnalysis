@@ -29,3 +29,19 @@ crPlots(lm(formula = revenue ~ clean.movies$budget + clean.movies$runtime + clea
 qqPlot(full$residuals)
 ncvTest(full)
 
+
+full<-lm(formula = revenue^0.22 ~ budget + runtime + popularity + 
+           vote_count , data = clean.movies, na.action="na.exclude")
+
+par(mfrow=c(2,2))
+plot(clean.movies$revenue^0.22 ~ clean.movies$budget, col='green')
+points(clean.movies$budget, predict(full), col='red')
+
+plot(clean.movies$revenue^0.22 ~ clean.movies$runtime, col='green')
+points(clean.movies$runtime, predict(full), col='red')
+
+plot(clean.movies$revenue^0.22 ~ clean.movies$popularity, col='green')
+points(clean.movies$popularity, predict(full), col='red')
+
+plot(clean.movies$revenue^0.22 ~ clean.movies$vote_count, col='green')
+points(clean.movies$vote_count, predict(full), col='red')

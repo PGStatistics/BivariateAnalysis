@@ -80,3 +80,10 @@ ggplot2::ggsave("plots/piechart.png", plot = p, device = "png",
                 dpi = 320, limitsize = TRUE)
 
 rm(genres, average_revenue, p, data, result)
+
+
+library(leaps)
+library(Ecdat)
+library(car)
+scatterplot(genres, average_revenue)
+cor(clean.movies$release_year, clean.movies$revenue,method="pearson", use="complete.obs")
